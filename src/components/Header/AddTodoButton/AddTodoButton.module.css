@@ -1,0 +1,22 @@
+.buttonText {
+    text-wrap: nowrap;
+}
+
+.buttonTodo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+@media screen and (max-width: 768px) {
+    .buttonText {
+        display: none;
+    }    
+
+    .buttonTodo {
+        padding-left: 8px;
+        padding-right: 8px;
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+}
+

@@ -1,0 +1,27 @@
+.footerContainer {
+    padding: 1rem;
+    border-top: solid 1px #a4a4a4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    align-items: center;
+
+}
+
+.container p {
+    margin: 0;
+}
+
+.container a {
+    color: black;
+}
+
+.linkContainer {
+    display: flex;
+    gap: 0.5rem;
+}

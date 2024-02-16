@@ -1,0 +1,15 @@
+.todosList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    min-height: 400px;
+}
+
+@media screen and (max-width: 768px) {
+    .todosList {
+        min-height: 300px;
+    }
+    
+}

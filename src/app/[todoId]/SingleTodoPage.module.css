@@ -1,0 +1,48 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.headerSection {
+    display: flex;
+    justify-content: space-between;
+}
+
+.headerButtons {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.headerSection span p {
+    margin-bottom: 0.25rem;
+}
+
+.headerAndDate {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.mainSection {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.mainSection > div:nth-child(1){
+    flex-grow: 1;
+}
+
+.priorityWrap {
+    display: flex;
+    align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+    .mainSection {
+        flex-direction: column-reverse;
+    }
+    
+}

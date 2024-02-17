@@ -19,6 +19,7 @@
 .todoItem a {
   color: var(--bs-body-color);
   width: 100%;
+  text-decoration: none;
 }
 
 .todoItemHeader {
@@ -27,11 +28,6 @@
   overflow: hidden; 
 }
 
-.todoItemHeader h3 {
-  text-wrap: nowrap;
-  
-  text-overflow: ellipsis;
-}
 
 .todoItem h3 {
   width: 100%;
@@ -62,5 +58,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .todoItemHeader h3 {
+    font-size: 16px;
   }
 }

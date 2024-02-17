@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import TodoDescription from "@/components/TodoDescription/TodoDescription";
 import TodoParameters from "@/components/TodoParameters/TodoParameters";
 import TodoPriorityBadge from "@/components/TodoPriorityBadge/TodoPriorityBadge";
@@ -28,6 +30,9 @@ async function SingleTodoPage({ params }: singleTodoPageProps) {
 
   return (
     <main className={styles.container}>
+      <div className={styles.backButton}>
+        <Link href={"/"}>← Вернуться к списку заметок</Link>
+      </div>
       <section className={styles.headerSection}>
         <h3>{todoData.todoTitle}</h3>
         <div className={styles.headerButtons}>

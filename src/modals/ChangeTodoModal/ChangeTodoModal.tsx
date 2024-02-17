@@ -22,22 +22,18 @@ function ChangeTodoModal({
   todoId,
   todoDone,
 }: CreateTodoModalProps) {
+
+  // Записываем текущее значение полей в стейтах
   const [titleValue, setTitleValue] = useState(todoTitle);
   const [doneValue, setDoneValue] = useState(todoDone);
+  const defaultPriotity = priorityEnum.find((priority) => priority.value === todoPriority);
+  const [priorityValue, setPriorityValue] = useState<PriorityEnumOption | undefined>(defaultPriotity);
+  const [descriptionValue, setDescriptionValue] = useState(convertDescriptionToString(todoDescription));
 
-  const defaultPriotity = priorityEnum.find(
-    (priority) => priority.value === todoPriority
-  );
-  const [priorityValue, setPriorityValue] = useState<
-    PriorityEnumOption | undefined
-  >(defaultPriotity);
-
-  const [descriptionValue, setDescriptionValue] = useState(
-    convertDescriptionToString(todoDescription)
-  );
-
+  // Сообщения об ошибке
   const [alertMessage, setAlertMessage] = useState<string | undefined>();
 
+  // Оборачиваем server action, чтобы можно было получить ошибки при неверных параметрах
   const clientAction = async (formData: FormData) => {
     const result = await changeTodo(formData);
     if (result?.error) {

@@ -14,28 +14,34 @@ import styles from "./TodoTable.module.css";
 import AnimatedLoader from "../AnimatedLoader/AnimatedLoader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
-function TodoTable({activeTodos=false}: {activeTodos?: boolean}) {
+
+/**
+ * Компонент списка задач.
+ * Если activeTodos false - показывает только незавершенные задачи
+ */
+function TodoTable({ activeTodos = false }: { activeTodos?: boolean }) {
+
   const [todosData, setTodosData] = useState<
     AllTodosResponse | null | undefined
   >(undefined);
+  // Кол-во страниц получаем с бэка
   const [amountOfPages, setAmountOfPages] = useState(0);
-  const { currentPage, itemsPerPage, changeAmountOfPages } =
-    usePagination();
 
+  const { currentPage, itemsPerPage, changeAmountOfPages } = usePagination();
   const { sortingField, priorityField } = useFilter();
 
+  // Запрос к api с параметрами, в зависимости от параметров из контекста.
   useEffect(() => {
     const getData = async () => {
       const todos = await fetch(
         `/api/?page=${currentPage}&pageSize=${itemsPerPage}&pageCount=true&sortingField=${sortingField}&priorityField=${priorityField}&activeTodos=${activeTodos}`,
         {
           method: "GET",
-          next: { revalidate: 0 }
+          next: { revalidate: 0 },
         }
       )
         .then((response) => response.json())
         .catch((error) => error.error.status);
-
 
       if (todos.cause) {
         console.error(
@@ -49,8 +55,8 @@ function TodoTable({activeTodos=false}: {activeTodos?: boolean}) {
           `При отправке запроса произошла ошибка. Статус: ${todos.error.status}`
         );
         setTodosData(null);
-      } 
-      
+      }
+
       if (todos.data) {
         setTodosData(todos);
         setAmountOfPages(todos.meta.pagination.pageCount);
@@ -58,18 +64,26 @@ function TodoTable({activeTodos=false}: {activeTodos?: boolean}) {
       }
     };
     getData();
-  }, [currentPage, itemsPerPage, amountOfPages, sortingField, priorityField, activeTodos, changeAmountOfPages]);
+  }, [
+    currentPage,
+    itemsPerPage,
+    amountOfPages,
+    sortingField,
+    priorityField,
+    activeTodos,
+    changeAmountOfPages,
+  ]);
 
   return (
     <>
-      {todosData === undefined && <AnimatedLoader/>}
-      {todosData === null && <ErrorMessage/>}
-      
-      {todosData &&
+      {todosData === undefined && <AnimatedLoader />}
+      {todosData === null && <ErrorMessage />}
+
+      {todosData && (
         <>
           <TodoControls />
           <div className={styles.todosList}>
-            {todosData?.data.length === 0 && <TableNotFoundFilters/>} 
+            {todosData?.data.length === 0 && <TableNotFoundFilters />}
             {todosData?.data.map((todoItem) => (
               <TodoItem
                 key={`todo-${todoItem.id}`}
@@ -83,7 +97,7 @@ function TodoTable({activeTodos=false}: {activeTodos?: boolean}) {
           </div>
           <TablePagination amountOfPages={amountOfPages} />
         </>
-      }
+      )}
     </>
   );
 }

@@ -40,11 +40,12 @@
     align-items: center;
 }
 
+.backButton a {
+    text-decoration: none;
+}
+
 @media screen and (max-width: 768px) {
     .mainSection {
         flex-direction: column-reverse;
-    }
-    .headerSection h3 {
-        font-size: 16px;
     }
 }

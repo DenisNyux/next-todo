@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useState } from "react";
 
@@ -6,10 +6,7 @@ import Image from "next/image";
 import { Button } from "react-bootstrap";
 
 import ChangeTodoModal from "@/modals/ChangeTodoModal/ChangeTodoModal";
-import {
-  TodoPriorities,
-  TodoDescription,
-} from "@/requests/todos/types/Todo";
+import { TodoPriorities, TodoDescription } from "@/requests/todos/types/Todo";
 
 import styles from "./ChangeItemButton.module.css";
 
@@ -43,7 +40,9 @@ function ChangeItemButton({
         className={styles.squareButton}
         onClick={handleOpenChangeModal}
       >
-        <Image src={"/edit.svg"} width={20} height={20} alt="edit"></Image>
+        <div className="image">
+        <Image src={"/edit.svg"} fill alt="edit"></Image>
+        </div>
       </Button>
       <ChangeTodoModal
         show={isChangeModalOpen}

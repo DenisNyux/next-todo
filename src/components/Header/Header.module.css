@@ -10,13 +10,13 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    flex-wrap: nowrap;
 }
 
 .logoContainer h2 {
     margin: 0;
     text-decoration: none;
     color: black;
-    text-wrap: nowrap;
 }
 
 .controlButtons {
@@ -25,10 +25,22 @@
     gap: 0.5rem;
 }
 
-@media screen and (max-width: 1024) {
+@media screen and (max-width: 1024px) {
     .header {
         display: grid;
         grid-template-columns: auto auto;
     }
+
+  
     
+}
+
+@media screen and (max-width: 375px) {
+    .logoContainer h2 {
+        font-size: 20px;
+    }
+
+    .logoContainer h2 {
+        flex-wrap: wrap;
+    }
 }

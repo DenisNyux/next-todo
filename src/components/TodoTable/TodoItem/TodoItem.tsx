@@ -6,8 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button, FormCheck } from "react-bootstrap";
 
-import { useFirstRender } from "@/hooks/useFirstRender";
-import ChangeTodoModal from "@/modals/ChangeTodoModal/ChangeTodoModal";
 import {
   TodoPriorities,
   TodoDescription,
@@ -26,6 +24,10 @@ type TodoItemProps = {
   todoDone: boolean;
 };
 
+/**
+ * Рендерит заметку.
+ * В качестве props принимает данные о заметке.
+ */
 function TodoItem({
   title,
   priority,
@@ -33,32 +35,40 @@ function TodoItem({
   todoId,
   todoDone,
 }: TodoItemProps) {
+
+  // Чекбокс для маркировки задачи как выполненная
   const [markedDone, setMarkedDone] = useState(todoDone);
 
-  const firstRender = useFirstRender();
+  // Будем записывать сюда состояние задачи после того как ее пометили закрытой, чтобы избежать лишних запросов
+  const [todoRealState, setTodoRealState] = useState(todoDone);
 
+
+  // Запрос к бэкенду на изменение статуса выполнения задачи
   useEffect(() => {
     const putData = async () => {
+
       const requestBody: PutTodoRequestBody = {
         data: {
           todoDone: markedDone,
         },
       };
-
       const requestParams = {
         method: "PUT",
-        next: { revalidate: 0 },
+        next: { revalidate: 60 },
         body: JSON.stringify(requestBody),
       };
-
       const resp = await fetch(`/api/?todoId=${todoId}`, requestParams).then(
         (data) => data.json()
       );
+      setTodoRealState(resp.todoDone)
     };
-    if (!firstRender) {
+
+    if (todoRealState !== markedDone) {
       putData();
     }
-  }, [markedDone, firstRender, todoId]);
+
+  }, [markedDone, todoId, todoRealState]);
+
 
   return (
     <div className={styles.todoItem}>

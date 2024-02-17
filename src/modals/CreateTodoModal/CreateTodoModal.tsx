@@ -6,7 +6,6 @@ import { Form } from "react-bootstrap";
 import { Alert } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { useFormState } from "react-dom";
 
 import { TodoPriorities } from "@/requests/todos/types/Todo";
 
@@ -20,10 +19,11 @@ type CreateTodoModalProps = {
 
 function CreateTodoModal({ show, handleClose }: CreateTodoModalProps) {
 
+  // Сообщения об ошибке
   const [alertMessage, setAlertMessage] = useState<string | undefined>()
 
+  // Оборачиваем server action, чтобы можно было получить ошибки при неправильных параметрах
   const clientAction = async (formData: FormData) => {
-
     const result = await createTodo(formData);
     if (result?.error) {
       setAlertMessage(result.error.message)

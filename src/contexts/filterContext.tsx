@@ -21,7 +21,9 @@ type FilterProviderProps = {
 
 export const FilterProvider = ({ children }: FilterProviderProps) => {
   const [sortingField, setSortingField] = useState("updatedAt");
-  const [priorityField, setPriorityField] = useState<"all" | TodoPriorities>("all");
+  const [priorityField, setPriorityField] = useState<"all" | TodoPriorities>(
+    "all"
+  );
 
   const changeSortingField = (value: SortingField) => {
     setSortingField(value);
@@ -37,7 +39,7 @@ export const FilterProvider = ({ children }: FilterProviderProps) => {
         sortingField,
         priorityField,
         changeSortingField,
-        changePriorityField
+        changePriorityField,
       }}
     >
       {children}

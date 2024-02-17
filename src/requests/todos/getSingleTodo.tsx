@@ -1,5 +1,12 @@
 import { SingleTodoRequest, SingleTodoResponse } from "./types/Todo";
 
+/**
+ * Запрос на получение одной задачи
+ *
+ * @param {SingleTodoRequest} requestParams 
+ * @return {Promise<SingleTodoResponse>} 
+ */
+
 async function getSingleTodo(requestParams: SingleTodoRequest) : Promise<SingleTodoResponse> {
   const requestOptions = {
     method: "GET",

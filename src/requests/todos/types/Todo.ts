@@ -1,13 +1,28 @@
 import { SortingField } from "@/components/TodoTable/TodoControls/types/sortingTypes";
 
+/**
+ * Список всех задач
+ */
 export type AllTodosRequest = {
+  // Текущая страница.
   page: number;
+
+  // Количество элементов на странице.
   pageSize: number;
+
+  // Параметр, необходимый для получения количества страниц
   pageCount: boolean;
+
+  // Поле по которому идет сортировка
   sortingField: SortingField;
+
+  // Фильтр по приоритету
   priorityField: TodoPriorities | "all";
+
+  // Фильтр по выводу активных/неактивных задач
   activeTodos: boolean | string | null;
 };
+
 
 export type AllTodosResponse = {
   data: SingleTodo[];
@@ -21,28 +36,33 @@ export type AllTodosResponse = {
   };
 };
 
+
 export type SingleTodo = {
   id: number;
   attributes: {
-    todoUid: string;
+    // Название задачи
     todoTitle: string;
+
+    // Дата создания
     createdAt: string;
+
+    // Дата изменения
     updatedAt: string;
+
+    // Формат описания
     todoDescription: TodoDescription;
-    todoStatus: TodoStatuses;
+
+    // Статус задачи
     todoDone: boolean;
+
+    // Приоритет
     todoPriority: TodoPriorities;
   };
 };
 
-export type TodoDescription = {
-  type: string;
-  children: {
-    type: string;
-    text: string;
-  }[];
-}[];
-
+/**
+ *  Редактирование задачи
+ */
 export type PutTodoRequest = {
   todoId: string;
   body: string;
@@ -57,13 +77,16 @@ export type PutTodoRequestBody = {
   };
 };
 
+/**
+ *  Создание задачи
+ */
 export type PostTodoRequest = {
   body: PostTodoRequestBody;
 };
 
 export type PostTodoResponse = {
-  data: SingleTodo
-}
+  data: SingleTodo;
+};
 
 export type PostTodoRequestBody = {
   data: {
@@ -74,19 +97,30 @@ export type PostTodoRequestBody = {
   };
 };
 
-
+/**
+ *  Получение одной задачи
+ */
 export type SingleTodoRequest = {
   todoId: string;
 };
 
 export type SingleTodoResponse = {
-  data: SingleTodo
-}
+  data: SingleTodo;
+};
 
-export type TodoStatuses = "active" | "done" | "archived";
-
+/**
+ *  Вспомогательные типы
+ */
 export type TodoPriorities =
   | "critical"
   | "important"
   | "standart"
   | "unimportant";
+
+export type TodoDescription = {
+  type: string;
+  children: {
+    type: string;
+    text: string;
+  }[];
+}[];

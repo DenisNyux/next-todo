@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Приложение список задач
 
-## Getting Started
+Frontend часть приложения, написанная на Next.js 14.1.0. 
 
-First, run the development server:
+Backend написан при помощи Strapi. Это headless CMS. Я использовал ее, т.к. в ней можно быстро и удобно через дашборд создать API. Ссылка на репозиторий – [Strapi](https://github.com/DenisNyux/todo-strapi-backend)
+
+Для того чтобы развернуть это приложение локально необходимо указать .env переменную со ссылкой на api, в формате:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+API_URL="Url бэкенд-сервера"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Структура приложения
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Исходный код приложения я разделил по следующей структуре:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- [/app](#app) - основные страницы приложения в соответсвии с файловой системой Next.js
+- [/components](#components) - компоненты, которые используются на странице
+- [/сontexts](#contexts) - React контексты
+- [/hooks](#hooks) - кастомные хуки
+- [/modals](#modals) - модальные окна
+- [/requests](#requests) - запросы к внешнему API
+- [/utils](#utils) - вспомогательные функции
 
-## Learn More
+## /app
 
-To learn more about Next.js, take a look at the following resources:
+У приложения два роута: / – на нем выводятся все задачи, и /archived – страница с уже закрытыми задачами.  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Присутствует динамический маршрут для вывода страницы заметки – [todoId], а также маршрут /api 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### /api
 
-## Deploy on Vercel
+В моем приложении самый часто отправляемый запрос – на получние всех задач. Так как пользователь должен иметь возможность управлять отображением задач (фильтрация, сортировка, кол-во заметок на странице), то я решил не вызывать его напрямую, а сначала отправлять запрос на роут /api. Такой подход рекомендует [официальная документация](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#fetching-data-on-the-client-with-route-handlers). Аналогичным образом настроен запрос на изменение задачи, в момент когда мы пометили ее как завершенную, совершается PUT запрос к роуту /api.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+В /api лежит Route Handler, который принимает GET и PUT запросы с их параметрами и передает их в функцию из /requests, делающую запрос к внешнему api.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## /components
+
+В этой папке лежат все компоненты моего приложения. Я старался использовать серверные компоненты, но те, что требовали частого ререндера или использования контекста, я сделал клиентскими. 
+
+## /contexts
+
+Моё приложение использует context API. Разворачивание полноценного state менеджера я посчитал нецелесообразным, т.к. я не планировал передавать большое кол-во данных между компонентами. В основном, данные передавались между компонентами TodoControls и TodoTable. Всего у меня используется два контекста: 
+
+- filterContext – необходим для того, чтобы передавать параметры фильтрации и сортировки. 
+- pagination – необходим для передачи параметров пагинации.
+
+В контекст я обернул все компоненты на главной странице и странице с закрытыми задачами. 
+
+## /hooks
+
+В своем приложении я использовал один кастомный хук, который отслеживает, что компонент рендерится впервые и позволяет не отправлять многочисленные PUT запросы по каждому из выведенных задач. Они отправлялись, т.к. дефолтное значение чекбокса о том что задача сделана было записано в стейте.
+
+## /modals
+Здесь содержатся модальные формы для создания и изменения задачи. Формы отправляются при помощи [server actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations). В них настроена минимальная валидация, на то, что отправляемые значения не пустые. 
+
+## /requests
+
+Тут находятся все запросы которые я отправляю к внешнему API, а также типы по которым я проверяю параметры запроса и ответ сервера. Всего я отправляю три вида запросов: GET, PUT, POST
+
+## /utils
+
+Вспомогательные функции, которые служат для преобразования данных, получаемых с внешнего API.
+
+## Внешний вид и стили
+
+Для стилизации я использовал библиотеку Bootstrap компонентов для react и css modules. Приложение адаптирована под мобильные экраны и планшеты.

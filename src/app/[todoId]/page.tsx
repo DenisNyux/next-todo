@@ -36,7 +36,6 @@ async function SingleTodoPage({ params }: singleTodoPageProps) {
           </div>
           <ChangeItemButton
             title={todoData.todoTitle}
-            status={todoData.todoStatus}
             priority={todoData.todoPriority}
             todoDescription={todoData.todoDescription}
             todoId={params.todoId}

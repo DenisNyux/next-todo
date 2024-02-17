@@ -9,7 +9,6 @@ import { Button, FormCheck } from "react-bootstrap";
 import { useFirstRender } from "@/hooks/useFirstRender";
 import ChangeTodoModal from "@/modals/ChangeTodoModal/ChangeTodoModal";
 import {
-  TodoStatuses,
   TodoPriorities,
   TodoDescription,
 } from "@/requests/todos/types/Todo";
@@ -22,7 +21,6 @@ import TodoPriorityBadge from "../../TodoPriorityBadge/TodoPriorityBadge";
 type TodoItemProps = {
   title: string;
   todoId: string;
-  status: TodoStatuses;
   priority: TodoPriorities;
   todoDescription: TodoDescription;
   todoDone: boolean;
@@ -30,7 +28,6 @@ type TodoItemProps = {
 
 function TodoItem({
   title,
-  status,
   priority,
   todoDescription,
   todoId,
@@ -76,7 +73,6 @@ function TodoItem({
         </div>
         <ChangeItemButton
           title={title}
-          status={status}
           priority={priority}
           todoDescription={todoDescription}
           todoId={todoId}

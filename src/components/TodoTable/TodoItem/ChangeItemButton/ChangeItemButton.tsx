@@ -7,7 +7,6 @@ import { Button } from "react-bootstrap";
 
 import ChangeTodoModal from "@/modals/ChangeTodoModal/ChangeTodoModal";
 import {
-  TodoStatuses,
   TodoPriorities,
   TodoDescription,
 } from "@/requests/todos/types/Todo";
@@ -17,7 +16,6 @@ import styles from "./ChangeItemButton.module.css";
 type ChangeItemButtonProps = {
   title: string;
   todoId: string;
-  status: TodoStatuses;
   priority: TodoPriorities;
   todoDescription: TodoDescription;
   todoDone: boolean;
@@ -25,7 +23,6 @@ type ChangeItemButtonProps = {
 
 function ChangeItemButton({
   title,
-  status,
   priority,
   todoDescription,
   todoId,

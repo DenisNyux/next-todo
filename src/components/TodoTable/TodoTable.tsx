@@ -75,7 +75,6 @@ function TodoTable({activeTodos=false}: {activeTodos?: boolean}) {
                 key={`todo-${todoItem.id}`}
                 todoId={String(todoItem.id)}
                 title={todoItem.attributes.todoTitle}
-                status={todoItem.attributes.todoStatus}
                 priority={todoItem.attributes.todoPriority}
                 todoDone={todoItem.attributes.todoDone}
                 todoDescription={todoItem.attributes.todoDescription}

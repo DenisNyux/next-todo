@@ -3,8 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
+import Header from "@/components/Header/Header";
 
 const inter = Inter({ subsets: ["latin", "cyrillic"] });
 
